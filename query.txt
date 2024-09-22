@@ -1,0 +1,107 @@
+php artisan make:migration add_user_id_to_store_products_table --table=products
+php artisan make:model Storeproduct --migration
+
+php artisan make:repository StoreProductRepository
+php artisan make:request StoreProductRequest
+
+DB::enableQueryLog();
+dd(DB::getQueryLog());
+
+dd($stores);
+php artisan migrate:refresh --step=1
+
+File Path
+php artisan passport:install --force
+
+D:\xampp\htdocs\laundry\app\Http\Controllers\Web\Variants\VariantController.php
+D:\xampp\htdocs\laundry\app\Http\Controllers\Web\Products\ProductController.php
+D:\xampp\htdocs\laundry\app\Http\Controllers\Web\Services\ServiceController.php
+D:\xampp\htdocs\laundry\app\Http\Controllers\Web\Root\ShopControllerphp
+
+D:\xampp\htdocs\laundry\app\Repositories\VariantRepository.php
+D:\xampp\htdocs\laundry\app\Repositories\ProductRepository.php
+
+D:\xampp\htdocs\laundry\resources\views\variants\index.blade.php
+D:\xampp\htdocs\laundry\resources\views\products\create.blade.php
+D:\xampp\htdocs\laundry\resources\views\products\index.blade.php
+
+D:\xampp\htdocs\laundry\app\Models\User.php
+D:\xampp\htdocs\laundry\app\Models\Store.php
+D:\xampp\htdocs\laundry\app\Models\Service.php
+
+D:\xampp\htdocs\laundry\database\migrations\2024_08_23_144701_add_user_id_to_products_table.php
+D:\xampp\htdocs\laundry\database\migrations\2024_08_22_215739_add_user_id_to_variants_table.php
+
+
+php artisan make:migration add_user_id_to_products_table --table=products
+php artisan make:migration add_user_id_to_variants_table --table=variants
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use App\Models\StoreProduct;
+use App\Models\Service;
+use App\Models\Store;
+use App\Models\Variant;
+use App\Models\Product;
+
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+       Schema::create((new StoreProduct())->getTable(), function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Store::class)->constrained();
+            $table->foreignIdFor(Service::class)->constrained();
+            $table->foreignIdFor(Variant::class)->constrained();
+            $table->foreignIdFor(Product::class)->constrained();
+            $table->float('price');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists((new StoreProduct())->getTable());
+    }
+};
+
+
+
+
